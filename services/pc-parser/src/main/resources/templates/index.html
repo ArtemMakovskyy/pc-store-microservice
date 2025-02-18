@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+    <h2>Програма аналізу ігрових компьютерів</h2>
+    <section>
+        <h3>Опис програми</h3>
+        <p style="text-align: left;">Програма розраховує вартість та комплектує комп’ютери з наявних комплектуючих на сайті <a href="https://hotline.ua/" target="_blank">Hotline</a>. Ціль - відобразити близький до реального потенціал збірки та розрахувати його вартість.</p>
+    </section>
+    <section>
+        <h3>Вибір комплектуючих</h3>
+        <p style="text-align: left;">Програма вибирає недорогі підходящі комплектуючі, мінімальна кількість постачальників яких - п'ять та більше. Шукає результат тесту при поєднанні процесор, материнська плата та відеокарта, розраховує потужність згідно з результатами тестів, відображених на сайті <a href="https://www.userbenchmark.com/" target="_blank">UserBenchmark</a>.</p>
+    </section>
+    <section>
+        <h3>Збереження та сортування</h3>
+        <p style="text-align: left;">Всі комплектації зберігаються в <span style="color: green;">EXCEL</span> та сортуються по ціні за абстрактний FPS, від меншої вартості до більшої. Для зручності кращі поєднання ціни та потужності помічені маркером BEST_PRICE. В подальшому для аналізу можна користуватися фільтрами Excel для фільтрування комплектацій.</p>
+    </section>
+    <section>
+        <h3>Детальний аналіз</h3>
+        <p style="text-align: left;">Для більш детального аналізу користуйтеся сайтом <a href="https://www.gpucheck.net/gpu/nvidia-geforce-rtx-4070/amd-ryzen-5-3600/ultra/?lang=en&currency=usd" target="_blank">www.gpucheck.net</a>, на якому можна порівняти потужність збірки виходячи з конкретного тесту. Дані потужності, зібрані в EXCEL, можуть не співпадати.</p>
+    </section>
+    <p style="color: red;">УВАГА! ВСІ РЕЗУЛЬТАТИ ТЕСТІВ ПРИБЛИЗНІ ТА НЕ ВІДОБРАЖАЮТЬ 100% КАРТИНИ, ТА МОЖУТЬ КОЛИВАТИСЬ.</p>
+    <button type="button" onclick="location.href='/operations'">Перейти до операцій</button>
+</div>
+</body>
+</html>

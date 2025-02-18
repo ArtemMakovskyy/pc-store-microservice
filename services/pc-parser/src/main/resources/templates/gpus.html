@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>GPUs List</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<h1>Список відеокарт для додавання потужності блоків живлення</h1>
+
+<div th:if="${gpus.size() > 0}">
+    <form action="/saveGpus" method="post" onsubmit="return validateForm()">
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Power Requirement</th>
+            </tr>
+            <tr th:each="gpu : ${gpus}">
+                <td th:text="${gpu.model}"></td>
+                <td>
+                    <input type="hidden" name="gpuId" th:value="${gpu.id}"/>
+                    <input type="number" name="powerRequirement" th:value="${gpu.powerRequirement}" required/>
+                </td>
+            </tr>
+        </table>
+        <button type="submit">Оновити</button>
+    </form>
+</div>
+<div th:if="${gpus.size() == 0}">
+    <p style="text-align: center;">Немає даних для виправлення.</p>
+    <p style="text-align: center;">Усі дані внесені.</p>
+</div>
+
+<script>
+    function validateForm() {
+        const powerRequirements = document.getElementsByName('powerRequirement');
+        for (let i = 0; i < powerRequirements.length; i++) {
+            if (!Number.isInteger(parseFloat(powerRequirements[i].value))) {
+                alert('Please enter a valid integer for power requirement.');
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

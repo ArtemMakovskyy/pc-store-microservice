@@ -1,0 +1,21 @@
+CREATE TABLE `cpus_user_benchmark` (
+                                       `id` bigint NOT NULL AUTO_INCREMENT,
+                                       `model` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                       `model_hl` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                       `gaming_score` double DEFAULT NULL,
+                                       `desktop_score` double DEFAULT NULL,
+                                       `workstation_score` double DEFAULT NULL,
+                                       `avg_bench` double DEFAULT NULL,
+                                       `cpu_specification` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                       `is_deleted` bit(1) NOT NULL,
+                                       `manufacturer` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                       `memory_percents` double DEFAULT NULL,
+                                       `part_number` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                       `price` double DEFAULT NULL,
+                                       `url_of_cpu` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                       `user_rating` double DEFAULT NULL,
+                                       `value_percents` double DEFAULT NULL,
+                                       `cores_quantity` int DEFAULT NULL,
+                                       `threads_quantity` int DEFAULT NULL,
+                                       PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1654 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;

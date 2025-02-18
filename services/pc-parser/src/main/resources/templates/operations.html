@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Управління операціями</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        #logContainer { height: 200px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h2>Запуск операцій</h2>
+<h3 id="statusMessage" style="color: red;"></h3>
+
+<form id="operationsForm">
+    <label><input type="checkbox" name="updateUserBenchmarkCpu"> Оновити CPU Benchmark</label><br>
+    <label><input type="checkbox" name="updateUserBenchmarkGpu"> Оновити GPU Benchmark</label><br>
+    <button type="button" onclick="location.href='/gpus'">Додати дані потужностей блоків живлення</button>
+    <br><br>
+    <label><input type="checkbox" name="updateHotline"> Оновити Hotline</label><br>
+    <label><input type="checkbox" name="createPcList"> Створити список ПК</label><br>
+    <label><input type="checkbox" name="saveReportToExcel"> Зберегти звіт в Excel</label><br>
+    <button type="button" onclick="executeOperation()">Запустити</button>
+</form>
+
+<div id="logContainer" class="container">
+    <h3>Логи</h3>
+    <ul id="logList"></ul>
+</div><br>
+
+<div class="container">
+    <h4>Швидкий старт:</h4>
+    <ul>
+        <li style="text-align: left;">Для повсякденного використання рекомендовано використовувати останні три пункти.
+        </li>
+        <li style="text-align: left;">Якщо ви поставите галочку на всі пункти, всі операції по оновленню пройдуть
+            успішно. Але якщо будуть знайдені нові відеокарти, вони потраплять в базу даних, але не будуть використані,
+            оскільки не буде даних про потужність блоку живлення.
+        </li>
+        <li style="text-align: left;">Після додавання нових відеокарт необхідно натискати кнопку «Додати дані
+            потужностей блоків живлення», щоб нові відеокарти пішли в розрахунок. Це слід зробити до запуску пункту
+            "Створити список ПК"
+        </li>
+        <li style="text-align: left;">
+            Зберегти звіт в Excel. Файл зберігається під назвою <strong>pc_configuration_рік-дата-день_час.xlsx. Після цього кроку ви можете завантажити готовий звіт на пк.
+            Для завантаження оновленого файлу натисніть</strong>
+            <a href="/download"
+               style="background-color: #0073e6; color: white; padding: 1px 3px; text-decoration: none; border-radius: 3px;">
+                завантажити xlsx на пк
+            </a>
+        </li>
+        <li style="text-align: left;">Час збору та обробки даних для кожного пункту може займати декілька хвилин. Після завершення роботи з'явиться напис 'Операцію виконано успішно!'. Завантаження готового файлу відбувається швидко та залежить від швидкості інтернету
+        </li>
+    </ul>
+
+</div>
+
+<script>
+    function executeOperation() {
+        let form = document.getElementById("operationsForm");
+        let formData = new FormData(form);
+
+        let statusMessage = document.getElementById("statusMessage");
+        statusMessage.innerText = "ЧЕКАЙТЕ ЗАКІНЧЕННЯ.";
+        statusMessage.style.color = "red";
+
+        fetch("/operations/execute", {
+            method: "POST",
+            body: new URLSearchParams(new FormData(form))
+        })
+            .then(response => response.json())
+            .then(data => {
+                statusMessage.innerText = data.message;
+                statusMessage.style.color = data.success ? "green" : "red";
+            })
+            .catch(error => {
+                statusMessage.innerText = "ПОМИЛКА: " + error;
+                statusMessage.style.color = "red";
+            });
+    }
+
+    const socket = new WebSocket("ws://localhost:8090/logs");
+    const logList = document.getElementById("logList");
+
+    socket.onmessage = function(event) {
+        const newLog = document.createElement("li");
+        newLog.textContent = event.data;
+        logList.appendChild(newLog);
+        document.getElementById("logContainer").scrollTop = document.getElementById("logContainer").scrollHeight;
+    };
+</script>
+
+</body>
+</html>
