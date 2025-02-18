@@ -8,11 +8,11 @@
 		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.pc</groupId>
-	<artifactId>pc-parser</artifactId>
+	<groupId>com.pc.pcparser</groupId>
+	<artifactId>parser</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pc-parser</name>
-	<description>pc-parser</description>
+	<name>parser</name>
+	<description>parser</description>
 
 	<properties>
 		<java.version>17</java.version>
