@@ -18,3 +18,9 @@
 /services/parser/target/
 /services/parser/.idea/
 /services/parser/.mvn/
+/services/notificator/mvnw.cmd
+/services/notificator/mvnw
+/services/notificator/.gitattributes
+/services/notificator/.mvn/
+/services/notificator/.idea/
+/services/notificator/src/main/resources/information.txt
