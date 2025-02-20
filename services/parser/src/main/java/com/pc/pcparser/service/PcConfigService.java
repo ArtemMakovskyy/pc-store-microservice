@@ -39,7 +39,7 @@ import org.springframework.stereotype.Service;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class CreatorPcService {
+public class PcConfigService {
     private static final int MIN_PROPOSITION_QUANTITY_DEFAULT = 5;
     private static final double CASE_PRICE_MIN = 15.0;
     private static final double CASE_PRICE_AVG = 25.0;
@@ -62,7 +62,6 @@ public class CreatorPcService {
     private final LogService logService;
     private final PcConfigMapper pcConfigMapper;
 
-    //todo implement it
     public List<PcConfigDto> getAllPcConfigDto() {
         return pcConfigRepository.findAll()
                 .stream()
@@ -70,10 +69,12 @@ public class CreatorPcService {
                 .toList();
     }
 
-    public List<PcConfig> getAllByBestPrice() {
-        final List<PcConfig> allByMarkerOrderByPredictionPrice = pcConfigRepository
-                .findAllByMarkerOrderByPredictionPrice(PcMarker.BEST_PRICE);
-        return allByMarkerOrderByPredictionPrice;
+    public List<PcConfigDto> getAllPcConfigDtoByBestPrice() {
+        return pcConfigRepository
+                .findAllByMarkerOrderByPredictionPrice(PcMarker.BEST_PRICE)
+                .stream()
+                .map(pcConfigMapper::toDto)
+                .toList();
     }
 
     public boolean updateDataAndCreatePcList(

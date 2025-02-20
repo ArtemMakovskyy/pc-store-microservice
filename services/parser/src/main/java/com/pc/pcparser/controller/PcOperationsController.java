@@ -1,6 +1,6 @@
 package com.pc.pcparser.controller;
 
-import com.pc.pcparser.service.CreatorPcService;
+import com.pc.pcparser.service.PcConfigService;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Log4j2
 public class PcOperationsController {
 
-    private final CreatorPcService creatorPcService;
+    private final PcConfigService pcConfigService;
 
     @GetMapping("/")
     public String showIndexPage() {
@@ -46,7 +46,7 @@ public class PcOperationsController {
 
         Map<String, Object> response = new HashMap<>();
         try {
-            boolean result = creatorPcService.updateDataAndCreatePcList(
+            boolean result = pcConfigService.updateDataAndCreatePcList(
                     updateUserBenchmarkCpu,
                     updateUserBenchmarkGpu,
                     updateHotline,

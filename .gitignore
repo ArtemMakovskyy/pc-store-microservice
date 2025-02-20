@@ -24,3 +24,8 @@
 /services/notificator/.mvn/
 /services/notificator/.idea/
 /services/notificator/src/main/resources/information.txt
+/services/stock-service/mvnw.cmd
+/services/stock-service/mvnw
+/services/stock-service/.gitattributes
+/services/stock-service/.mvn/
+/services/stock-service/.idea/
