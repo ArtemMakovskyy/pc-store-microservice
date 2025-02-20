@@ -1,6 +1,6 @@
 package com.pc.pcparser.service.hotline;
 
-import com.pc.pcparser.repository.PcHotLineRepository;
+import com.pc.pcparser.repository.PcConfigRepository;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,11 +17,11 @@ public class HotlineDataUpdateCoordinatorService {
             hotlineDataUpdateServices;
     private final List<HotlineDatabaseSynchronizationService>
             hotlineDatabaseSynchronizationServices;
-    private final PcHotLineRepository
-            pcHotLineRepository;
+    private final PcConfigRepository
+            pcConfigRepository;
 
     public void updateAllData() {
-        pcHotLineRepository.deleteAll();
+        pcConfigRepository.deleteAll();
 
         int availableProcessors = Runtime.getRuntime().availableProcessors();
         ExecutorService executor = Executors.newFixedThreadPool(availableProcessors);

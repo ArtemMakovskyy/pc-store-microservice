@@ -1,4 +1,4 @@
-create table pc
+create table pc_config
 (
     id                    bigint auto_increment
         primary key,

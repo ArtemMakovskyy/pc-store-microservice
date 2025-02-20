@@ -23,9 +23,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "pc")
+@Table(name = "pc_config")
 @EqualsAndHashCode
-public class Pc {
+public class PcConfig {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

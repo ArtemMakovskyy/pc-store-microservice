@@ -1,6 +1,6 @@
 package com.pc.pcparser.service;
 
-import com.pc.pcparser.model.Pc;
+import com.pc.pcparser.model.PcConfig;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ExcelExporter {
-    public void exportToExcelPcConfiguration(List<Pc> pcList, String filePath) {
+    public void exportToExcelPcConfiguration(List<PcConfig> pcConfigList, String filePath) {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("PC List");
 
@@ -39,31 +39,31 @@ public class ExcelExporter {
 
             CellStyle borderStyle = getBorderStyle(workbook);
             int rowNum = 1;
-            for (Pc pc : pcList) {
+            for (PcConfig pcConfig : pcConfigList) {
                 Row row = sheet.createRow(rowNum++);
                 for (int i = 0; i < headers.length; i++) {
                     row.createCell(i);
                 }
-                row.getCell(0).setCellValue(pc.getId());
-                row.getCell(1).setCellValue(pc.getCpu().getName());
-                row.getCell(2).setCellValue(pc.getMotherboard().getManufacturer() + " "
-                        + pc.getMotherboard().getName());
-                row.getCell(3).setCellValue(pc.getMemory().getManufacturer() + " "
-                        + pc.getMemory().getName());
-                row.getCell(4).setCellValue(pc.getGpu().getManufacturer() + " "
-                        + pc.getGpu().getName() + " " + pc.getGpu().getMemorySize());
-                row.getCell(5).setCellValue(pc.getSsd().getManufacturer() + " "
-                        + pc.getSsd().getName());
-                row.getCell(6).setCellValue(pc.getPowerSupplier().getManufacturer() + " "
-                        + pc.getPowerSupplier().getName() + " "
-                        + pc.getPowerSupplier().getPower() + "W");
-                row.getCell(7).setCellValue(pc.getAvgGpuBench());
-                row.getCell(8).setCellValue(pc.getGamingScore());
-                row.getCell(9).setCellValue(pc.getPredictionGpuFpsFhd());
-                row.getCell(10).setCellValue(pc.getPriceForFps());
-                row.getCell(11).setCellValue(pc.getPrice().doubleValue());
-                if (pc.getMarker() != null) {
-                    row.getCell(12).setCellValue(pc.getMarker().toString());
+                row.getCell(0).setCellValue(pcConfig.getId());
+                row.getCell(1).setCellValue(pcConfig.getCpu().getName());
+                row.getCell(2).setCellValue(pcConfig.getMotherboard().getManufacturer() + " "
+                        + pcConfig.getMotherboard().getName());
+                row.getCell(3).setCellValue(pcConfig.getMemory().getManufacturer() + " "
+                        + pcConfig.getMemory().getName());
+                row.getCell(4).setCellValue(pcConfig.getGpu().getManufacturer() + " "
+                        + pcConfig.getGpu().getName() + " " + pcConfig.getGpu().getMemorySize());
+                row.getCell(5).setCellValue(pcConfig.getSsd().getManufacturer() + " "
+                        + pcConfig.getSsd().getName());
+                row.getCell(6).setCellValue(pcConfig.getPowerSupplier().getManufacturer() + " "
+                        + pcConfig.getPowerSupplier().getName() + " "
+                        + pcConfig.getPowerSupplier().getPower() + "W");
+                row.getCell(7).setCellValue(pcConfig.getAvgGpuBench());
+                row.getCell(8).setCellValue(pcConfig.getGamingScore());
+                row.getCell(9).setCellValue(pcConfig.getPredictionGpuFpsFhd());
+                row.getCell(10).setCellValue(pcConfig.getPriceForFps());
+                row.getCell(11).setCellValue(pcConfig.getPrice().doubleValue());
+                if (pcConfig.getMarker() != null) {
+                    row.getCell(12).setCellValue(pcConfig.getMarker().toString());
                 }
 
                 for (int i = 0; i < headers.length; i++) {
