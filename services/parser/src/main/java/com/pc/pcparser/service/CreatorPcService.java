@@ -114,7 +114,9 @@ public class CreatorPcService {
             if (saveReportToExel) {
                 logService.addLog("save report started ");
                 exportToExcelPcList(filePrefix,
-                        pcConfigRepository.findPcListWithNonZeroPriceForFpsOrdered());
+                        pcConfigRepository.findPcListWithNonZeroPriceForFpsOrdered().stream()
+                                .map(pcConfigMapper::toDto)
+                                .toList());
                 logService.addLog("save report done ");
             }
 
@@ -129,7 +131,7 @@ public class CreatorPcService {
         return true;
     }
 
-    public void exportToExcelPcList(String fileName, List<PcConfig> pcConfigList) {
+    public void exportToExcelPcList(String fileName, List<PcConfigDto> pcConfigList) {
         log.info("Start save file to Excel");
         logService.addLog("Start save file to Excel");
         long executionTime = measureExecutionTime(() -> {
