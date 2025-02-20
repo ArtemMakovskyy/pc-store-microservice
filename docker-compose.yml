@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   mysql:
     image: mysql:latest
     environment:
@@ -8,21 +9,25 @@ services:
       MYSQL_DATABASE: parser
       MYSQL_USER: bestuser
       MYSQL_PASSWORD: secretPassword
-
-#    volumes:
-#      - mysql_data:/var/lib/mysql
-
     ports:
       - "3307:3306"
-
     restart: unless-stopped
-
     networks:
       - parser-net
+
+  postgres-stock:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: stock
+      POSTGRES_USER: bestuser
+      POSTGRES_PASSWORD: secretPassword
+    ports:
+      - "5431:5432"
+    restart: unless-stopped
+    networks:
+      - parser-net
+
 
 networks:
   parser-net:
     driver: bridge
-
-#volumes:
-#  mysql_data:
