@@ -20,7 +20,6 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE keyboards SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
 public class Keyboard extends AbstractProduct {
-    private String layout;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

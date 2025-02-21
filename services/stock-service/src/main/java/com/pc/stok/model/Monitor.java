@@ -20,10 +20,12 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE monitors SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
 public class Monitor extends AbstractProduct {
-    private String resolution;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String resolution;
+
     @Column(nullable = false)
     private boolean isDeleted = false;
 
