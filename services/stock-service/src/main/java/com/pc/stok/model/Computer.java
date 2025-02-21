@@ -6,24 +6,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
-import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "pc_products")
+@Table(name = "computers")
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE pc_products SET is_deleted = true WHERE id=?")
+@NoArgsConstructor
+@SQLDelete(sql = "UPDATE computers SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
-public class PcProduct {
+public class Computer extends AbstractProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long partNumber;
     private String cpu;
     private String cpuUrl;
     private String motherboard;
@@ -36,12 +35,9 @@ public class PcProduct {
     private String ssdUrl;
     private String powerSupplier;
     private String powerSupplierUrl;
-    private BigDecimal costPrice;
-    private BigDecimal sellingPrice;
     private Integer predictionFps;
     private Double gamingScore;
     private Integer priceForFps;
-    private Boolean IsBestPrice;
     @Column(nullable = false)
     private boolean isDeleted = false;
 

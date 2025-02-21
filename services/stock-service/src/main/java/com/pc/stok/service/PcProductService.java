@@ -27,8 +27,7 @@ public class PcProductService {
     public List<PcConfigDto> getAllByBestPrice() {
         return pcProductFeignClient.getAllByBestPrice();
     }
-//todo
-    @PostConstruct
+
     public List<PcProductDto> addToStock(){
         final List<PcProduct> list = getAllByBestPrice().stream()
                 .map(pcProductMapper::toEntity)
