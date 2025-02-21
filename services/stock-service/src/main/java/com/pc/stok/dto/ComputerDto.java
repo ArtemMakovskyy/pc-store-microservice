@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
-public class PcProductDto {
-    private Long partNumber;
+public class ComputerDto {
+    private Long id;
     private String cpu;
     private String cpuUrl;
     private String motherboard;
@@ -18,10 +18,13 @@ public class PcProductDto {
     private String ssdUrl;
     private String powerSupplier;
     private String powerSupplierUrl;
-    private BigDecimal costPrice;
-    private BigDecimal sellingPrice;
     private Integer predictionFps;
     private Double gamingScore;
     private Integer priceForFps;
-    private Boolean IsBestPrice;
+    private String partNumber;
+    private String name;
+    private String description;
+    private BigDecimal costPrice;
+    private BigDecimal sellingPrice;
+
 }

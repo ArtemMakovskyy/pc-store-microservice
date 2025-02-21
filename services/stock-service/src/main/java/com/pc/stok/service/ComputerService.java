@@ -1,19 +1,60 @@
 package com.pc.stok.service;
 
+import com.pc.stok.dto.ComputerDto;
+import com.pc.stok.dto.mapper.ComputerMapper;
 import com.pc.stok.exception.ProductDataException;
 import com.pc.stok.exception.ProductNotFoundException;
+import com.pc.stok.feignclient.PcProductFeignClient;
 import com.pc.stok.model.Computer;
 import com.pc.stok.repository.ComputerRepository;
+import jakarta.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
 @RequiredArgsConstructor
-public class ComputerService implements ProductService<Computer> {
+public class ComputerService implements ProductService<Computer>, PcConfigService {
     private final ComputerRepository computerRepository;
+    private final ComputerMapper computerMapper;
+    private final PcProductFeignClient pcProductFeignClient;
+
+    public void init() {
+        final BigDecimal bigDecimal = BigDecimal.valueOf(1.2);
+        List<String> partNumbers = new ArrayList<>();
+        partNumbers.add("4804521022025");
+        partNumbers.add("4792821022025");
+        partNumbers.add("4702121022025");
+        restockConfigurations(partNumbers, bigDecimal);
+    }
+
+    @Override
+    public List<ComputerDto> restockConfigurations(List<String> partNumbers, BigDecimal percentageIncrease) {
+
+        List<Computer> allComputerConfigs = pcProductFeignClient.getAll().stream()
+                .map(computerMapper::configToEntity)
+                .toList();
+
+        List<Computer> matchingComputers = allComputerConfigs.stream()
+                .filter(computer -> partNumbers.contains(computer.getPartNumber()))
+                .toList();
+
+        for (Computer computer : matchingComputers) {
+            BigDecimal newPrice = computer.getSellingPrice()
+                    .multiply(BigDecimal.ONE.add(percentageIncrease.divide(BigDecimal.valueOf(100))));
+            computer.setSellingPrice(newPrice);
+        }
+
+        List<Computer> addedComputers = computerRepository.saveAll(matchingComputers);
+        return addedComputers.stream()
+                .map(computerMapper::toDto)
+                .toList();
+    }
+
 
     @Override
     public Computer save(Computer product) {
@@ -87,4 +128,5 @@ public class ComputerService implements ProductService<Computer> {
         computer.setSellingPrice(newSellingPrice);
         return computerRepository.save(computer);
     }
+
 }

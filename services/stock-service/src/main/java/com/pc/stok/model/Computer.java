@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -40,5 +41,4 @@ public class Computer extends AbstractProduct {
     private Integer priceForFps;
     @Column(nullable = false)
     private boolean isDeleted = false;
-
 }
