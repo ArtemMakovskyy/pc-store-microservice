@@ -20,6 +20,8 @@ public class MouseService implements ProductService<CreateMouseDto, MouseDto> {
     private final MouseRepository mouseRepository;
     private final MouseMapper mouseMapper;
 
+
+
     @Override
     public MouseDto save(CreateMouseDto createDto) {
         if (createDto.getPartNumber() == null || createDto.getName() == null || createDto.getSellingPrice() == null) {

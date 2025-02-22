@@ -2,7 +2,7 @@ version: '3'
 
 services:
 
-  mysql:
+  mysql-parse:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: rootPassword
@@ -27,6 +27,17 @@ services:
     networks:
       - parser-net
 
+  postgres-product:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: product
+      POSTGRES_USER: bestuser
+      POSTGRES_PASSWORD: secretPassword
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+    networks:
+      - parser-net
 
 networks:
   parser-net:

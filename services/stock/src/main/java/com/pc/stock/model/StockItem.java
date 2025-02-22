@@ -1,4 +1,4 @@
-package com.pc.product.model;
+package com.pc.stock.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,17 +13,26 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "mice")
+@Table(name = "stock_items")
 @Getter
 @Setter
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE mice SET is_deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE stock_items SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
-public class Mouse extends AbstractProduct {
+public class StockItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private Long productId;
+
+    @Column(nullable = false)
+    private String productType;
+
+    @Column(nullable = false)
+    private Integer quantity;
+
     @Column(nullable = false)
     private boolean isDeleted = false;
-
 }

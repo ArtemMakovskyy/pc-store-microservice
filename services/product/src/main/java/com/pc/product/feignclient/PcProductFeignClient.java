@@ -1,6 +1,5 @@
 package com.pc.product.feignclient;
 
-
 import com.pc.product.dto.PcConfigDto;
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;

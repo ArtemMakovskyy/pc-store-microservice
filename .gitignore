@@ -35,3 +35,9 @@
 /services/product/.gitattributes
 /services/product/.mvn/
 /services/product/.idea/
+/services/stock/mvnw.cmd
+/services/stock/mvnw
+/services/stock/HELP.md
+/services/stock/.gitattributes
+/services/stock/.mvn/
+/services/stock/.idea/
