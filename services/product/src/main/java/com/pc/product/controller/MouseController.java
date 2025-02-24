@@ -46,7 +46,6 @@ public class MouseController {
         return new ResponseEntity<>(mouseDtos, HttpStatus.OK);
     }
 
-    //todo fixed it
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMouse(@PathVariable Long id) {
         if (mouseService.deleteById(id)) {
@@ -63,7 +62,6 @@ public class MouseController {
         return new ResponseEntity<>(mouseDto, HttpStatus.OK);
     }
 
-    //todo fixed it
     @PatchMapping("/{id}/selling-price")
     public ResponseEntity<MouseDto> updateMouseSellingPrice(
             @PathVariable Long id, @RequestParam BigDecimal newSellingPrice) {
