@@ -13,15 +13,17 @@ import org.springframework.stereotype.Service;
 public class ProductService {
     private final ComputerClient computerClient;
     private final MonitorClient monitorClient;
+    private final KeyboardService keyboardService;
     private final KeyboardClient keyboardClient;
     private final MouseClient mouseClient;
+    private final MouseService mouseService;
 
     public ProductDto getProductByType(Long productId, String productType) {
         return switch (productType.toLowerCase()) {
             case "computer" -> computerClient.getById(productId);
             case "monitor" -> monitorClient.getById(productId);
-            case "keyboard" -> keyboardClient.getById(productId);
-            case "mouse" -> mouseClient.getById(productId);
+            case "keyboard" -> keyboardService.getById(productId);
+            case "mouse" -> mouseService.getById(productId);
             default -> throw new IllegalArgumentException("Unknown product type: " + productType);
         };
     }
