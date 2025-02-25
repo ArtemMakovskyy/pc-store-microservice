@@ -27,7 +27,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    @Async
+    @Async("taskExecutor")
     public void sendSimpleEmail(Mail mail) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail.getTo());
@@ -38,7 +38,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    @Async
+    @Async("taskExecutor")
     public void sendHTMLEmail(Mail mail) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
 
@@ -53,7 +53,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    @Async
+    @Async("taskExecutor")
     public void sendEmailWithThymeLeaf(Mail mail) throws MessagingException {
         for (String recipient: mail.getTo()){
             Context context = new Context();
@@ -74,7 +74,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    @Async
+    @Async("taskExecutor")
     public void sendEmailWithAttachment(Mail mail) throws MessagingException {
         for (String recipient: mail.getTo()){
             MimeMessage message = mailSender.createMimeMessage();
