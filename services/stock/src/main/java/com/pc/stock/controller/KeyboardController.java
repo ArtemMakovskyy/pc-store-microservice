@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/keyboards")
+@RequestMapping("/api/stock/keyboards")
 @RequiredArgsConstructor
 @Log4j2
 public class KeyboardController {

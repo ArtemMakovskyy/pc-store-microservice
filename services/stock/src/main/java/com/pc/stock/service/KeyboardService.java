@@ -2,7 +2,7 @@ package com.pc.stock.service;
 
 import com.pc.stock.dto.CreateKeyboardDto;
 import com.pc.stock.dto.KeyboardDto;
-import com.pc.stock.service.faignclient.KeyboardClient;
+import com.pc.stock.service.faignclient.KeyboardFeignClient;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 @Log4j2
 @RequiredArgsConstructor
 public class KeyboardService {
-    private final KeyboardClient keyboardClient;
+    private final KeyboardFeignClient keyboardFeignClient;
     
     public KeyboardDto getById(Long id) {
         try {
-            return CompletableFuture.supplyAsync(() -> keyboardClient.getById(id))
+            return CompletableFuture.supplyAsync(() -> keyboardFeignClient.getById(id))
                     .get();  
         } catch (Exception e) {
             log.error("Error fetching keyboard by ID", e);
@@ -28,7 +28,7 @@ public class KeyboardService {
     
     public List<KeyboardDto> getAll() {
         try {
-            return CompletableFuture.supplyAsync(() -> keyboardClient.getAll())
+            return CompletableFuture.supplyAsync(() -> keyboardFeignClient.getAll())
                     .get();  
         } catch (Exception ex) {
             log.error("Error fetching all keyboards", ex);
@@ -38,7 +38,7 @@ public class KeyboardService {
     
     public KeyboardDto create(CreateKeyboardDto createKeyboardDto) {
         try {
-            return CompletableFuture.supplyAsync(() -> keyboardClient.create(createKeyboardDto))
+            return CompletableFuture.supplyAsync(() -> keyboardFeignClient.create(createKeyboardDto))
                     .get();  
         } catch (Exception ex) {
             log.error("Error creating keyboard", ex);
@@ -48,7 +48,7 @@ public class KeyboardService {
     
     public KeyboardDto update(Long id, CreateKeyboardDto createKeyboardDto) {
         try {
-            return CompletableFuture.supplyAsync(() -> keyboardClient.update(id, createKeyboardDto))
+            return CompletableFuture.supplyAsync(() -> keyboardFeignClient.update(id, createKeyboardDto))
                     .get();  
         } catch (Exception ex) {
             log.error("Error updating keyboard", ex);
@@ -59,7 +59,7 @@ public class KeyboardService {
     public void delete(Long id) {
         try {
             CompletableFuture<Void> future = CompletableFuture.supplyAsync(() -> {
-                keyboardClient.delete(id);
+                keyboardFeignClient.delete(id);
                 return null;
             });
             future.get();  
@@ -72,7 +72,7 @@ public class KeyboardService {
     public KeyboardDto updateSellingPrice(Long id, BigDecimal newSellingPrice) {
         try {
             return CompletableFuture.supplyAsync(
-                    () -> keyboardClient.updateSellingPrice(id, newSellingPrice))
+                    () -> keyboardFeignClient.updateSellingPrice(id, newSellingPrice))
                     .get();  
         } catch (Exception ex) {
             log.error("Error updating selling price", ex);

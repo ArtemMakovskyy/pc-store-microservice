@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @FeignClient(name = "PRODUCT-SERVICE")
-public interface MouseClient {
+public interface MouseFeignClient {
 
     @GetMapping("/api/mice/{id}")
     MouseDto getById(@PathVariable("id") Long id);

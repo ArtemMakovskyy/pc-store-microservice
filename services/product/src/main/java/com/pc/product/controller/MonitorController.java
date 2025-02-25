@@ -27,7 +27,6 @@ public class MonitorController {
 
     private final MonitorService monitorService;
 
-
     @PostMapping
     public ResponseEntity<MonitorDto> saveMonitor(
             @RequestBody @Valid CreateMonitorDto createMonitorDto) {
@@ -42,13 +41,11 @@ public class MonitorController {
         return new ResponseEntity<>(monitorDto, HttpStatus.OK);
     }
 
-
     @GetMapping
     public ResponseEntity<List<MonitorDto>> getAllMonitors() {
         List<MonitorDto> monitorDtos = monitorService.findAll();
         return new ResponseEntity<>(monitorDtos, HttpStatus.OK);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMonitor(@PathVariable Long id) {

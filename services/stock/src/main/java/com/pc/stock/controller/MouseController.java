@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/mice")
+@RequestMapping("/api/stock/mice")
 @RequiredArgsConstructor
 public class MouseController {
     private final MouseService mouseService;

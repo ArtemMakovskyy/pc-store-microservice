@@ -2,7 +2,7 @@ package com.pc.stock.service;
 
 import com.pc.stock.dto.CreateMouseDto;
 import com.pc.stock.dto.MouseDto;
-import com.pc.stock.service.faignclient.MouseClient;
+import com.pc.stock.service.faignclient.MouseFeignClient;
 import feign.FeignException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MouseService {
 
-    private final MouseClient mouseClient;
+    private final MouseFeignClient mouseFeignClient;
 
     public MouseDto save(CreateMouseDto createDto) {
         try {
-            return mouseClient.create(createDto);
+            return mouseFeignClient.create(createDto);
         } catch (FeignException ex) {
             log.error("Error occurred while creating mouse: {}", ex.getMessage(), ex);
             throw new RuntimeException("Failed to create mouse. Please try again later.");
@@ -29,7 +29,7 @@ public class MouseService {
 
     public MouseDto getById(Long id) {
         try {
-            return mouseClient.getById(id);
+            return mouseFeignClient.getById(id);
         } catch (FeignException ex) {
             log.error("Error occurred while fetching mouse with ID {}: {}", id, ex.getMessage(), ex);
             throw new RuntimeException("Mouse not found with ID " + id);
@@ -38,7 +38,7 @@ public class MouseService {
 
     public List<MouseDto> findAll() {
         try {
-            return mouseClient.getAll();
+            return mouseFeignClient.getAll();
         } catch (FeignException ex) {
             log.error("Error occurred while fetching all mice: {}", ex.getMessage(), ex);
             throw new RuntimeException("Failed to fetch mice list. Please try again later.");
@@ -48,7 +48,7 @@ public class MouseService {
     @Async
     public void deleteById(Long id) {
         try {
-            mouseClient.delete(id);
+            mouseFeignClient.delete(id);
         } catch (FeignException ex) {
             log.error("Error occurred while deleting mouse with ID {}: {}", id, ex.getMessage(), ex);
             throw new RuntimeException("Failed to delete mouse with ID " + id);
@@ -57,7 +57,7 @@ public class MouseService {
 
     public MouseDto update(Long id, CreateMouseDto createMouseDto) {
         try {
-            return mouseClient.update(id, createMouseDto);
+            return mouseFeignClient.update(id, createMouseDto);
         } catch (FeignException ex) {
             log.error("Error occurred while updating mouse with ID {}: {}", id, ex.getMessage(), ex);
             throw new RuntimeException("Failed to update mouse with ID " + id);
@@ -67,7 +67,7 @@ public class MouseService {
 
     public MouseDto updateSellingPrice(Long id, BigDecimal newSellingPrice) {
         try {
-            return mouseClient.updateSellingPrice(id, newSellingPrice);
+            return mouseFeignClient.updateSellingPrice(id, newSellingPrice);
         } catch (FeignException ex) {
             log.error("Error occurred while updating selling price for mouse with ID {}: {}", id, ex.getMessage(), ex);
             throw new RuntimeException("Failed to update selling price for mouse with ID " + id);
