@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -84,42 +85,57 @@ public class PcConfigService {
             boolean createPcList,
             boolean saveReportToExel) {
         try {
-            log.info("Starting data update process ");
-            logService.addLog("Starting data update process ");
+            log.info("Starting data update process");
+            logService.addLog("Starting data update process");
 
-            if (updateUserBenchmarkCpu) {
-                logService.addLog("update UserBenchmarkCpu started");
-                cpuUserBenchmarkService.loadAndSaveNewItems();
-                cpuUserBenchmarkService.updateMissingSpecifications();
-                logService.addLog("update UserBenchmarkCpu done");
-            }
+            CompletableFuture<Void> benchmarkFuture = CompletableFuture.runAsync(() -> {
+                if (updateUserBenchmarkCpu) {
+                    logService.addLog("update UserBenchmarkCpu started");
+                    cpuUserBenchmarkService.loadAndSaveNewItems();
+                    cpuUserBenchmarkService.updateMissingSpecifications();
+                    logService.addLog("update UserBenchmarkCpu done");
+                }
 
-            if (updateUserBenchmarkGpu) {
-                logService.addLog("update UserBenchmarkGpu started ");
-                gpuUserBenchmarkService.loadAndSaveNewItems();
-                logService.addLog("update UserBenchmarkGpu done");
-            }
+                if (updateUserBenchmarkGpu) {
+                    logService.addLog("update UserBenchmarkGpu started");
+                    gpuUserBenchmarkService.loadAndSaveNewItems();
+                    logService.addLog("update UserBenchmarkGpu done");
+                }
+            });
 
-            if (updateHotline) {
-                logService.addLog("update Hotline started ");
-                hotlineDataUpdateCoordinatorService.updateAllData();
-                logService.addLog("update Hotline done ");
-            }
+            CompletableFuture<Void> hotlineFuture = CompletableFuture.runAsync(() -> {
+                if (updateHotline) {
+                    logService.addLog("update Hotline started");
+                    hotlineDataUpdateCoordinatorService.updateAllData();
+                    logService.addLog("update Hotline done");
+                }
+            });
 
-            if (createPcList) {
-                logService.addLog("create Pc List started ");
-                createFilterAndSaveOptimalPcList();
-                logService.addLog("create Pc List done ");
-            }
+            CompletableFuture<Void> pcListFuture
+                    = CompletableFuture.allOf(benchmarkFuture, hotlineFuture)
 
-            if (saveReportToExel) {
-                logService.addLog("save report started ");
-                exportToExcelPcList(filePrefix,
-                        pcConfigRepository.findPcListWithNonZeroPriceForFpsOrdered().stream()
-                                .map(pcConfigMapper::toDto)
-                                .toList());
-                logService.addLog("save report done ");
-            }
+                    .thenRunAsync(() -> {
+                        if (createPcList) {
+                            logService.addLog("create Pc List started");
+                            createFilterAndSaveOptimalPcList();
+                            logService.addLog("create Pc List done");
+                        }
+                    })
+
+                    .thenRunAsync(() -> {
+                        if (saveReportToExel) {
+                            logService.addLog("save report started");
+                            exportToExcelPcList(
+                                    filePrefix, pcConfigRepository
+                                            .findPcListWithNonZeroPriceForFpsOrdered()
+                                            .stream()
+                                            .map(pcConfigMapper::toDto)
+                                            .toList());
+                            logService.addLog("save report done");
+                        }
+                    });
+
+            pcListFuture.join();
 
             log.info("Data update process completed successfully");
             logService.addLog("Data update process completed successfully");

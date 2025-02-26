@@ -54,7 +54,7 @@ public class CpuUserBenchmarkService {
                         .map(cpuUserBenchmarkMapper::toDto)
                         .toList());
 
-        log.info("Successfully Was added " + userBenchmarkCpus.size() + " new positions");
+        log.info("Successfully was added " + userBenchmarkCpus.size() + " new UserBenchmarkCpu positions");
         return userBenchmarkCpus;
     }
 

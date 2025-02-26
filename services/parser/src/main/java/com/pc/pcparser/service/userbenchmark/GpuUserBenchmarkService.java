@@ -61,7 +61,7 @@ public class GpuUserBenchmarkService {
         log.info("Detected {} new records for saving.", newItems.size());
 
         List<UserBenchmarkGpu> savedItems = gpuUserBenchmarkRepository.saveAll(newItems);
-        log.info("Saved {} new records to the database.", savedItems.size());
+        log.info("Saved {} new records to the GpuUserBenchmark database.", savedItems.size());
 
         return savedItems;
     }
