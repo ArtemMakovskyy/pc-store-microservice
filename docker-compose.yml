@@ -52,8 +52,22 @@ services:
     networks:
       - parser-net
 
+  mongo-customer:
+    image: mongo
+    restart: always
+    ports:
+      - "27019:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo_customer_data:/data/db
+    networks:
+      - parser-net
+
 volumes:
   mongo_data:
+  mongo_customer_data:
 
 networks:
   parser-net:

@@ -41,3 +41,9 @@
 /services/stock/.gitattributes
 /services/stock/.mvn/
 /services/stock/.idea/
+/services/customer/mvnw.cmd
+/services/customer/mvnw
+/services/customer/.gitattributes
+/services/customer/.mvn/
+/services/customer/target/
+/services/customer/.idea/
