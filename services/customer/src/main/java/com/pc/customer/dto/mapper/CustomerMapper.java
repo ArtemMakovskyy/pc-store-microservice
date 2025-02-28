@@ -15,8 +15,8 @@ public class CustomerMapper {
         return Customer.builder()
                 .id(request.id())
                 .name(request.name())
+                .lastname(request.lastname())
                 .email(request.email())
-                .age(request.age())
                 .build();
     }
 
@@ -27,8 +27,8 @@ public class CustomerMapper {
         return new CustomerResponse(
                 customer.getId(),
                 customer.getName(),
-                customer.getEmail(),
-                customer.getAge()
+                customer.getLastname(),
+                customer.getEmail()
         );
     }
 }

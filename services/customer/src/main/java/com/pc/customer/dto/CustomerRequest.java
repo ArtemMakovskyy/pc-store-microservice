@@ -8,11 +8,11 @@ public record CustomerRequest(
         String id,
         @NotNull(message = "Customer name is required")
         String name,
+        @NotNull(message = "Customer lastname is required")
+        String lastname,
         @NotNull(message = "Customer Email is required")
         @Email(message = "Customer Email is not a valid email address")
-        String email,
-        @Positive(message = "Customer age should be positive")
-        int age
+        String email
 ) {
 
 }

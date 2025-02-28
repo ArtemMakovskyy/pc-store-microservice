@@ -42,10 +42,12 @@ public class CustomerService {
         if (StringUtils.isNotBlank(request.name())) {
             customer.setName(request.name());
         }
+        if (StringUtils.isNotBlank(request.lastname())) {
+            customer.setLastname(request.lastname());
+        }
         if (StringUtils.isNotBlank(request.email())) {
             customer.setEmail(request.email());
         }
-        customer.setAge(request.age());
     }
 
     public List<CustomerResponse> findAllCustomers() {

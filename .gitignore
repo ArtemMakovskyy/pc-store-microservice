@@ -47,3 +47,8 @@
 /services/customer/.mvn/
 /services/customer/target/
 /services/customer/.idea/
+/services/order/mvnw.cmd
+/services/order/mvnw
+/services/order/.gitattributes
+/services/order/.mvn/
+/services/order/.idea/

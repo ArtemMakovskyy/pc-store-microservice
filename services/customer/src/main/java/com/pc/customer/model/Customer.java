@@ -17,6 +17,6 @@ public class Customer {
     @Id
     private String id;
     private String name;
+    private String lastname;
     private String email;
-    private int age;
 }
