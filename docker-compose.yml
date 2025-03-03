@@ -51,6 +51,18 @@ services:
     networks:
       - parser-net
 
+  postgres-payment:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: payment
+      POSTGRES_USER: bestuser
+      POSTGRES_PASSWORD: secretPassword
+    ports:
+      - "5435:5432"
+    restart: unless-stopped
+    networks:
+      - parser-net
+
   mongo:
     image: mongo
     restart: always

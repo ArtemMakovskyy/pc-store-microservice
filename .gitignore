@@ -52,3 +52,9 @@
 /services/order/.gitattributes
 /services/order/.mvn/
 /services/order/.idea/
+/services/payment/mvnw.cmd
+/services/payment/mvnw
+/services/payment/.gitattributes
+/services/payment/target/
+/services/payment/.mvn/
+/services/payment/.idea/
