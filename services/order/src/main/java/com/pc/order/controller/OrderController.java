@@ -34,7 +34,7 @@ public class OrderController {
 
     @GetMapping("/{order-id}")
     public ResponseEntity<OrderResponse> findById(
-            @PathVariable("order-id") Integer orderId  ) {
+            @PathVariable("order-id") Long orderId  ) {
         return ResponseEntity.ok(this.service.findById(orderId));
     }
 }

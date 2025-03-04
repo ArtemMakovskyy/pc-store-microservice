@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OrderProducer {
+public class KafkaOrderProducer {
 
     private final KafkaTemplate<String, OrderConfirmation> kafkaTemplate;
 
