@@ -3,6 +3,7 @@ package com.pc.payment.service;
 import com.pc.payment.dto.PaymentNotificationRequest;
 import com.pc.payment.dto.PaymentRequest;
 import com.pc.payment.dto.mapper.PaymentMapper;
+import com.pc.payment.model.Payment;
 import com.pc.payment.repository.PaymentRepository;
 import com.pc.payment.service.kafka.NotificationProducer;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,13 @@ public class PaymentService {
 
     public Long createPayment(PaymentRequest request) {
 //    this.validator.validate(request);
-        var payment = this.repository.save(this.mapper.toPayment(request));
+        final Payment payment = mapper.toPayment(request);
+        var payment2 = repository.save(payment);
+//        notification(request);
+        return payment.getId();
+    }
+
+    private void notification(PaymentRequest request) {
         this.notificationProducer.sendNotification(new PaymentNotificationRequest(
                 request.orderReference(),
                 request.amount(),
@@ -28,6 +35,5 @@ public class PaymentService {
                 request.customer().lastname(),
                 request.customer().email()
         ));
-        return payment.getId();
     }
 }

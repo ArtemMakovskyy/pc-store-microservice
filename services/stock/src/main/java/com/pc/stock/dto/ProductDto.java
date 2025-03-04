@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 public interface ProductDto {
+    Long getId();
     String getPartNumber();
     String getName();
     String getDescription();

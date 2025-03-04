@@ -1,12 +1,14 @@
 package com.pc.stock.controller;
 
 import com.pc.stock.dto.StockItemDto;
+import com.pc.stock.dto.mapper.StockItemMapper;
 import com.pc.stock.service.StockService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +33,11 @@ public class StockController {
     public ResponseEntity<List<StockItemDto>> getAllStockItems() {
         List<StockItemDto> stockItems = stockService.getAllStockItems();
         return new ResponseEntity<>(stockItems, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StockItemDto> findStockItemsById(@PathVariable Long id) {
+        return new ResponseEntity<>(stockService.findBtId(id), HttpStatus.OK);
     }
 
 }

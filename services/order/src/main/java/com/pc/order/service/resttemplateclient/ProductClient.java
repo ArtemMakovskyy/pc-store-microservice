@@ -46,4 +46,5 @@ public class ProductClient {
         }
         return responseEntity.getBody();
     }
+
 }

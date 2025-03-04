@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class StockItemMapperImpl implements StockItemMapper {
     private final ProductService productService;
 
-    @Override
+        @Override
     public StockItemDto mapToDto(StockItem stockItem) {
         ProductDto productDto = productService.getProductByType(
                 stockItem.getProductId(), stockItem.getProductType()

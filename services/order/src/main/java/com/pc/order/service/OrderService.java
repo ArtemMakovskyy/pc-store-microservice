@@ -8,18 +8,21 @@ import com.pc.order.dto.OrderResponse;
 import com.pc.order.dto.PaymentRequest;
 import com.pc.order.dto.PurchaseRequest;
 import com.pc.order.dto.PurchaseResponse;
+import com.pc.order.dto.StockItemDto;
 import com.pc.order.dto.mapper.OrderMapper;
 import com.pc.order.exception.BusinessException;
 import com.pc.order.model.Order;
 import com.pc.order.repository.OrderRepository;
 import com.pc.order.service.fiignClient.CustomerClient;
 import com.pc.order.service.fiignClient.PaymentClient;
+import com.pc.order.service.fiignClient.StockClient;
 import com.pc.order.service.kafka.OrderProducer;
 import com.pc.order.service.resttemplateclient.ProductClient;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +36,7 @@ public class OrderService {
     private final PaymentClient paymentClient;
     //REST Templates or Feign as we used before
     private final ProductClient productClient;
+    private final StockClient stockClient;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
 
@@ -41,35 +45,35 @@ public class OrderService {
         final CustomerResponse customer
                 = getCustomerIfExist(request.customerId());
 
-        final List<PurchaseResponse> purchasedProduct
-                = productClient.purchaseProductWithRestTemplate(request.products());
+        final StockItemDto body = stockClient.findStockItemsById(1L).getBody();
+        System.out.println(body);
 
-        Order order = repository.save(mapper.toOrder(request));
+        final Order savedOrder = repository.save(mapper.toOrder(request));
 
         final List<PurchaseRequest> productsList = request.products();
-        persistOrderLines(productsList, order.getId());
+        persistOrderLines(productsList, savedOrder.getId());
+        productsList.forEach(System.out::println);
+//        var paymentRequest = new PaymentRequest(
+//                request.amount(),
+//                request.paymentMethod(),
+//                savedOrder.getId(),
+//                savedOrder.getReference(),
+//                customer
+//        );
+//        paymentClient.requestOrderPayment(paymentRequest);
 
-        var paymentRequest = new PaymentRequest(
-                request.amount(),
-                request.paymentMethod(),
-                order.getId(),
-                order.getReference(),
-                customer
-        );
-        paymentClient.requestOrderPayment(paymentRequest);
 
+//        orderProducer.sendOrderConfirmation(
+//                new OrderConfirmation(
+//                        request.reference(),
+//                        request.amount(),
+//                        request.paymentMethod(),
+//                        customer,
+//                        purchasedProduct
+//                )
+//        );
 
-        orderProducer.sendOrderConfirmation(
-                new OrderConfirmation(
-                        request.reference(),
-                        request.amount(),
-                        request.paymentMethod(),
-                        customer,
-                        purchasedProduct
-                )
-        );
-
-        return order.getId();
+        return savedOrder.getId();
     }
 
     private void persistOrderLines(List<PurchaseRequest> products, Long orderId) {

@@ -35,4 +35,11 @@ public class StockService {
                 .map(stockItemMapper::mapToDto)
                 .collect(Collectors.toList());
     }
+
+    public StockItemDto findBtId(Long id) {
+        final StockItem stockItem = stockItemRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Can't find stockItem by id: " + id));
+
+        return stockItemMapper.mapToDto(stockItem);
+    }
 }

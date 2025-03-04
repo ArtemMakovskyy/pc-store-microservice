@@ -3,6 +3,7 @@ package com.pc.order.dto.mapper;
 import com.pc.order.dto.OrderRequest;
 import com.pc.order.dto.OrderResponse;
 import com.pc.order.model.Order;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +15,7 @@ public class OrderMapper {
         }
         return Order.builder()
                 .id(request.id())
-                .reference(request.reference())
+                .reference(UUID.randomUUID().toString())
                 .paymentMethod(request.paymentMethod())
                 .customerId(request.customerId())
                 .build();

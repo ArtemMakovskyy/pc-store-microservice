@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MouseDto implements ProductDto {
+    private Long id;
     private String partNumber;
     private String name;
     private String description;
