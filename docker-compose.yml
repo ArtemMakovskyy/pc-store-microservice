@@ -24,6 +24,7 @@ services:
     ports:
       - "5431:5432"
     restart: unless-stopped
+#    restart: no
     networks:
       - parser-net
 
@@ -65,7 +66,7 @@ services:
 
   mongo:
     image: mongo
-    restart: always
+    restart: on-failure
     ports:
       - 27018:27017
     environment:
@@ -78,7 +79,7 @@ services:
 
   mongo-customer:
     image: mongo
-    restart: always
+    restart: on-failure
     ports:
       - "27019:27017"
     environment:
