@@ -8,7 +8,8 @@ async function submitKeyboard() {
     };
 
     try {
-        const response = await fetch('http://localhost:8092/api/keyboards', {
+        // const response = await fetch('http://localhost:8092/api/keyboards', { // detail in config.js
+        const response = await fetch(getProductApiUrl('/api/keyboards'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
