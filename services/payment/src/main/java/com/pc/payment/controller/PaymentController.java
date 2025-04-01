@@ -19,8 +19,8 @@ public class PaymentController {
     private final PaymentService service;
 
     @GetMapping
-    public String r(){
-        return "r";
+    public String test(){
+        return "test";
     }
 
 //    @PostMapping

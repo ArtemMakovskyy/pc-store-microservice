@@ -1,11 +1,11 @@
 package com.pc.payment.service;
 
-import com.pc.payment.dto.PaymentNotificationRequest;
 import com.pc.payment.dto.PaymentRequest;
 import com.pc.payment.dto.mapper.PaymentMapper;
+import com.pc.payment.kafka.CreateSimpleMailObject;
+import com.pc.payment.kafka.ServiceSendingObject;
 import com.pc.payment.model.Payment;
 import com.pc.payment.repository.PaymentRepository;
-import com.pc.payment.service.kafka.NotificationProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,26 +14,27 @@ import org.springframework.stereotype.Service;
 public class PaymentService {
 
     private final PaymentRepository repository;
-    //  private final PaymentValidator<PaymentRequest> validator;
     private final PaymentMapper mapper;
-    private final NotificationProducer notificationProducer;
+    private final ServiceSendingObject serviceSendingObject;
 
     public Long createPayment(PaymentRequest request) {
-//    this.validator.validate(request);
+
         final Payment payment = mapper.toPayment(request);
-        var payment2 = repository.save(payment);
-//        notification(request);
+        final Payment savedPayment = repository.save(payment);
+
+        String[] to = new String[]{request.customer().email()};
+        CreateSimpleMailObject createSimpleMailObject
+                = new CreateSimpleMailObject(
+                to,
+                "Info about payment",
+                request.customer().firstname()  +", your order: "
+                        + savedPayment.getOrderId().toString() + ". Paid by: "
+                        + savedPayment.getPaymentMethod().toString()
+        );
+        System.out.println(createSimpleMailObject);
+        serviceSendingObject.createAndSendSendingObject(createSimpleMailObject);
+
         return payment.getId();
     }
 
-    private void notification(PaymentRequest request) {
-        this.notificationProducer.sendNotification(new PaymentNotificationRequest(
-                request.orderReference(),
-                request.amount(),
-                request.paymentMethod(),
-                request.customer().firstname(),
-                request.customer().lastname(),
-                request.customer().email()
-        ));
-    }
 }
