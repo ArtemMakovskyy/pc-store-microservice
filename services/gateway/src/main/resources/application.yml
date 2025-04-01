@@ -17,6 +17,10 @@ spring:
       routes:
         - id: java-mail-sender-service
           uri: lb://JAVA-MAIL-SENDER-SERVICE
-          #          uri: http://localhost:8082
           predicates:
             - Path=/api/mail/**
+
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/payments/**
