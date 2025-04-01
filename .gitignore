@@ -62,3 +62,7 @@
 /frontend/src/pages/product/aducation/
 /frontend/src/html-css-js-work/
 /services/test-service/
+/services/gateway/mvnw.cmd
+/services/gateway/mvnw
+/services/gateway/.gitattributes
+/services/gateway/.mvn/
