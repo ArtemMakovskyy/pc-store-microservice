@@ -66,3 +66,4 @@
 /services/gateway/mvnw
 /services/gateway/.gitattributes
 /services/gateway/.mvn/
+/services/notificator/src/main/resources/application.properties
